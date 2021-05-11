@@ -13,7 +13,7 @@ jobs:
     - name: Hello world action step
       uses: ./ # Uses an action in the root directory
     - name: Update issue to include email addresses alert
-      if: steps.hello.outputs.emails != ''
+      if: ${{ steps.hello.outputs.emails != '' }}
       run: |
         jq -nc '{"body": "${{ steps.hello.outputs.emails }}"}' | \
         curl -sL  -X POST -d @- \
