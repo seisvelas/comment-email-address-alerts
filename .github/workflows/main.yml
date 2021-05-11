@@ -14,7 +14,7 @@ jobs:
       id: scan
       uses: ./ # Uses an action in the root directory
     - name: Update issue to include email addresses alert
-      if: ${{ steps.hello.outputs.emails != '' }}
+      if: ${{ steps.scan.outputs.emails != '' }}
       run: |
         jq -nc '{"body": "${{ steps.scan.outputs.emails }}"}' | \
         curl -sL  -X POST -d @- \
