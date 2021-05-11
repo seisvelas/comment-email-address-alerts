@@ -6046,7 +6046,7 @@ const core = __nccwpck_require__(506);
 const github = __nccwpck_require__(489);
 
 try {
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
+  const payload = github.context.payload;
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`The comment: ${comment}`);
   core.setOutput("emails", ""); // set emails here!
