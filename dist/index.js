@@ -6053,12 +6053,14 @@ try {
   console.log(`emails: ${emails}`)
   const prelude = "The following email addresses were found in the previous comment: ";
   const epilogue = "\r\n\r\nPlease delete this comment from the issue once the addresses have been removed.";
-  core.setOutput(
-    "emails", 
-    emails 
-      ? prelude + emails.join(", ") + epilogue
-      : ""
-  );
+  
+  if (emails) {
+    core.setOutput("emails", prelude + emails.join(", ") + epilogue);
+  } else {
+    core.setOutput("emails", "");
+    console.log("No emails found in comment");
+  }
+
 } catch (error) {
   core.setFailed(error.message);
 }

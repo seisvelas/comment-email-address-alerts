@@ -10,7 +10,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Hello world action step
+    - name: Scan comment
       id: scan
       uses: ./ # Uses an action in the root directory
     - name: Update issue to include email addresses alert
