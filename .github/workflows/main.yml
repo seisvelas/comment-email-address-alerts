@@ -13,4 +13,9 @@ jobs:
     - name: Hello world action step
       uses: ./ # Uses an action in the root directory
     - name: Update issue to include email addresses alert
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+      run: |
+        jq -nc '{"body": "${{ steps.hello.outputs.emails }}"}' | \
+        curl -sL  -X POST -d @- \
+        -H "Content-Type: application/json" \
+        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        "https://api.github.com/repos/${{ GITHUB_REPOSITORY }}/issues/${{ github.event.issue.number }}/comments"
