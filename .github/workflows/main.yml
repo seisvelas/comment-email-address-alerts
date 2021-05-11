@@ -11,11 +11,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Hello world action step
+      id: scan
       uses: ./ # Uses an action in the root directory
     - name: Update issue to include email addresses alert
       if: ${{ steps.hello.outputs.emails != '' }}
       run: |
-        jq -nc '{"body": "${{ steps.hello.outputs.emails }}"}' | \
+        jq -nc '{"body": "${{ steps.scan.outputs.emails }}"}' | \
         curl -sL  -X POST -d @- \
         -H "Content-Type: application/json" \
         -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \

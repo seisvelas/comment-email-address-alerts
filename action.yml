@@ -1,5 +1,8 @@
 name: 'Hello World'
 description: 'Check for emails in Github issues and comments'
+outputs:
+  emails: # id of output
+    description: 'Email addresses found in comment'
 runs:
   using: 'node12'
   main: 'dist/index.js'
