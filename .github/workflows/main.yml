@@ -4,8 +4,6 @@ on:
   issues:
     types: [opened, edited]
 jobs:
-  env:
-      TOKEN: ${{ secrets.GITHUB_TOKEN }}
   find_emails:
     runs-on: ubuntu-latest
     name: Check for emails in issue comments
