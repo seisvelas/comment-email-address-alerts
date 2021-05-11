@@ -1,4 +1,4 @@
-name: 'Hello World'
+name: 'Email Addresses in Comments Alerts'
 description: 'Check for emails in Github issues and comments'
 outputs:
   emails: # id of output
