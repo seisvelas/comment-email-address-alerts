@@ -22,9 +22,9 @@ try {
     const output = `
     There were ${emails.length} email addresses found in the above comment. Please:
 
-    1) click \`three dots\` -> \`edit\` to remove the email addresses
-    2) click \`edited\` in the comment header, and click on the previous revision of the comment
-    3) when viewing the old revision with an email in it, click \`options\` -> \`delete this revision from history\`
+    1) click \\\`three dots\\\` -> \\\`edit\\\` to remove the email addresses
+    2) click \\\`edited\\\` in the comment header, and click on the previous revision of the comment
+    3) when viewing the old revision with an email in it, click \\\`options\\\` -> \\\`delete this revision from history\\\`
     `.replaceAll('    ', '');
 
     // make comment
