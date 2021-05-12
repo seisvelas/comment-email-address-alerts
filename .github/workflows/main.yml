@@ -15,11 +15,3 @@ jobs:
       uses: ./ # Uses an action in the root directory
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Update issue to include email addresses alert
-      if: ${{ steps.scan.outputs.emails != '' }}
-      run: |
-        jq -nc '{"body": "${{ steps.scan.outputs.emails }}"}' | \
-        curl -sL  -X POST -d @- \
-        -H "Content-Type: application/json" \
-        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-        "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments"
