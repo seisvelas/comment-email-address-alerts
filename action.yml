@@ -1,8 +1,9 @@
 name: 'Email Addresses in Comments Alerts'
 description: 'Check for emails in Github issues and comments'
-outputs:
-  emails: # id of output
-    description: 'Email addresses found in comment'
+inputs:
+  repo-token:
+    description: 'Secret token for GitHub API'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
