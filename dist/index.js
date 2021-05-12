@@ -6046,18 +6046,31 @@ const core = __nccwpck_require__(506);
 const github = __nccwpck_require__(489);
 const https = __nccwpck_require__(211);
 
+/*
+> There were [N] email addresses found in the above comment. Please:
+>
+> 1) click `three dots` -> `edit` to remove the email addresses
+> 2) click `edited` in the comment header, and click on the previous revision of the comment
+> 3) when viewing the old revision with an email in it, click `options` -> `delete this revision from history`
+*/
+
 try {
   const payload = github.context.payload;
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
   const emails = comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
   console.log(`emails: ${emails}`)
-  const prelude = "The following email addresses were found in the previous comment: ";
-  const epilogue = "\r\n\r\nPlease delete this comment from the issue once the addresses have been removed.";
 
   if (emails) {
     const repoToken = core.getInput('repo-token');
-    const output = prelude + emails.join(", ") + epilogue;
+    const output = `
+    There were ${emails.length} email addresses found in the above comment. Please:
+    
+    1) click \`three dots\` -> \`edit\` to remove the email addresses
+    2) click \`edited\` in the comment header, and click on the previous revision of the comment
+    3) when viewing the old revision with an email in it, click \`options\` -> \`delete this revision from history\`
+    `.replace('    ', '');
+
     // make comment
     const data = JSON.stringify({
         "body": output
