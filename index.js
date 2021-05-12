@@ -26,7 +26,8 @@ try {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            "Authorization": repoToken
+            "Authorization": repoToken,
+            "User-Agent": "Email Comment GitHub Action"
         }
     }
 
