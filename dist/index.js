@@ -6063,18 +6063,16 @@ try {
 
   if (emails) {
     const repoToken = core.getInput('repo-token');
-    const output = `
-    There were ${emails.length} email addresses found in the above comment. Please:
-
-    1) click \\\`three dots\\\` -> \\\`edit\\\` to remove the email addresses
-    2) click \\\`edited\\\` in the comment header, and click on the previous revision of the comment
-    3) when viewing the old revision with an email in it, click \\\`options\\\` -> \\\`delete this revision from history\\\`
-    `.replaceAll('    ', '');
+    const output = "There were " + emails.length + " email addresses found in the above comment. Please:"
+    const empty = "\n\n"
+    const stepOne = "1) click `three dots` -> `edit` to remove the email addresses\n"
+    const stepTwo = "2) click `edited` in the comment header, and click on the previous revision of the comment\n"
+    const stepThree = "3) when viewing the old revision with an email in it, click `options` -> `delete this revision from history`"
 
     // make comment
     const data = JSON.stringify({
-        "body": output
-      })
+      "body": output + empty + stepOne + stepTwo + stepThree
+    })
       
     const options = {
         hostname: 'api.github.com',
