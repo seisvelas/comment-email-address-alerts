@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Scan comment
       id: scan
-      uses: actions/comment-email-address-alerts@v2 # Uses an action in the root directory
+      uses: actions/comment-email-address-alerts@v7 # Uses an action in the root directory
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -28,4 +28,4 @@ With that in place, any email addresses mentioned in comments will be monitored 
 
 ---
 
-<img width="835" alt="Screen Shot 2021-05-11 at 9 37 00 p m" src="https://user-images.githubusercontent.com/44826516/117914667-077c5680-b2a1-11eb-9a5c-e04d66838cea.png">
+<img width="816" alt="Screen Shot 2021-05-12 at 3 55 33 p m" src="https://user-images.githubusercontent.com/44826516/118049129-85407080-b33a-11eb-8c9b-69a70678e3d2.png">
