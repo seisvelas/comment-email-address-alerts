@@ -23,3 +23,9 @@ jobs:
 ```
 
 That's it!
+
+With that in place, any email addresses mentioned in comments will be monitored by the Action:
+
+---
+
+<img width="835" alt="Screen Shot 2021-05-11 at 9 37 00 p m" src="https://user-images.githubusercontent.com/44826516/117914667-077c5680-b2a1-11eb-9a5c-e04d66838cea.png">
