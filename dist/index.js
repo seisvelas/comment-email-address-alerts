@@ -6066,7 +6066,7 @@ try {
     const options = {
         hostname: 'api.github.com',
         port: 443,
-        path: `/repos/${github.repository}/issues/${payload.issue.number}/comments`,
+        path: `/repos/${payload.issue.repository.full_name}/issues/${payload.issue.number}/comments`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
