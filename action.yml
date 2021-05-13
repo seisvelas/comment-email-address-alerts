@@ -1,4 +1,4 @@
-name: 'Email Addresses in Comments Alerts'
+name: 'Email Addresses in Comments Monitor'
 description: 'Check for emails in Github issues and comments'
 inputs:
   repo-token:
