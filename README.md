@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Scan comment
       id: scan
-      uses: actions/comment-email-address-alerts@v7 # Uses an action in the root directory
+      uses: actions/comment-email-address-alerts@v8 # Uses an action in the root directory
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 ```
