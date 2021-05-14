@@ -14,7 +14,7 @@ jobs:
     name: Check for emails in issue comments
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
     - name: Scan comment
       id: scan
       uses: actions/comment-email-address-alerts@v8
