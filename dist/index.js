@@ -6058,7 +6058,12 @@ try {
   const payload = github.context.payload;
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
-  const emails = comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+  const exemptDomains = core.getInput('exemptions')
+    .split(',');
+  console.log(`Exempt domains: ${exemptDomains}`);
+  const emails = comment
+    .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+    .filter(addr => exemptDomains.some(domain => !addr.endsWith(domain)))
   console.log(`emails: ${emails}`)
 
   if (emails) {
@@ -6108,6 +6113,7 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
+
 })();
 
 module.exports = __webpack_exports__;
