@@ -6063,7 +6063,7 @@ try {
   console.log(`Exempt domains: ${exemptDomains}`);
   const emails = comment
     .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-    .filter(addr => exemptDomains.some(domain => !addr.endsWith(domain)))
+    .filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
   console.log(`emails: ${emails}`)
 
   if (emails) {
