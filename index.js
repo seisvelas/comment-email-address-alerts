@@ -14,11 +14,12 @@ try {
   const payload = github.context.payload;
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
-  const exemptDomains = core.getInput('exemptions')
+  const exemptDomainsInput = core.getInput('exemptions')
     .split(',');
+  const exemptDomains = exemptDomainsInput.split(',');
   console.log(`Exempt domains: ${exemptDomains}`);
   let emails;
-  if (exemptDomains) {
+  if (exemptDomainsInput) {
     emails = comment
       .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
       .filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
