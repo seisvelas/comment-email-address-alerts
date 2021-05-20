@@ -16,7 +16,7 @@ try {
   console.log(`comment: ${comment}`)
   const exemptDomains = core.getInput('exemptions')
     .split(',');
-  console.log(exemptDomains)
+  console.log(`Exempt domains: ${exemptDomains}`);
   const emails = comment
     .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
     .filter(addr => exemptDomains.some(domain => !addr.endsWith(domain)))
