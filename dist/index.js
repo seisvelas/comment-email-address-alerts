@@ -6059,7 +6059,6 @@ try {
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
   const exemptDomainsInput = core.getInput('exemptions')
-    .split(',');
   const exemptDomains = exemptDomainsInput.split(',');
   console.log(`Exempt domains: ${exemptDomains}`);
   let emails;
