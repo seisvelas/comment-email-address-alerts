@@ -17,10 +17,16 @@ try {
   const exemptDomains = core.getInput('exemptions')
     .split(',');
   console.log(`Exempt domains: ${exemptDomains}`);
-  const emails = comment
+  let emails = comment
     .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
     .filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
   console.log(`emails: ${emails}`)
+
+  if (emails) {
+    if (emails.length === 0) {
+      emails = null;
+    }
+  }
 
   if (emails) {
     const repoToken = core.getInput('repo-token');
