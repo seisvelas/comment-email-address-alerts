@@ -4,6 +4,9 @@ inputs:
   repo-token:
     description: 'Secret token for GitHub API'
     required: true
+  exemptions:
+    description: 'domains exempt from scanning'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
