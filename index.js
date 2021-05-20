@@ -17,9 +17,16 @@ try {
   const exemptDomains = core.getInput('exemptions')
     .split(',');
   console.log(`Exempt domains: ${exemptDomains}`);
-  let emails = comment
-    .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-    .filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
+  let emails;
+  if (exemptDomains) {
+    emails = comment
+      .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+      .filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
+  } else {
+    emails = comment
+      .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+  }
+
   console.log(`emails: ${emails}`)
 
   if (emails) {
