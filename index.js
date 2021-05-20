@@ -14,11 +14,11 @@ try {
   const payload = github.context.payload;
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
-  const exceptedDomains = core.getInput('repo-token')
+  const exemptDomains = core.getInput('exemptions')
     .split(',');
   const emails = comment
     .match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-    .filter(addr => exceptedDomains.some(domain => addr.endsWith(domain)))
+    .filter(addr => exemptDomains.some(domain => addr.endsWith(domain)))
   console.log(`emails: ${emails}`)
 
   if (emails) {
