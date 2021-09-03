@@ -17,7 +17,7 @@ try {
   const exemptDomainsInput = core.getInput('exemptions')
   const exemptDomains = exemptDomainsInput.split(',');
   console.log(`Exempt domains: ${exemptDomains}`);
-  let emails = comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+  let emails = comment ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi) : null;
   if (exemptDomainsInput && emails) {
       emails = emails.filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
   }
@@ -32,15 +32,15 @@ try {
 
   if (emails) {
     const repoToken = core.getInput('repo-token');
-    const output = "There were " + emails.length + " email addresses found in the above comment. Please:"
-    const empty = "\n\n"
-    const stepOne = "1) click `three dots` -> `edit` to remove the email addresses\n"
-    const stepTwo = "2) click `edited` in the comment header, and click on the previous revision of the comment\n"
-    const stepThree = "3) when viewing the old revision with an email in it, click `options` -> `delete this revision from history`"
+
+    const notice = "There were " + emails.length + " email addresses found in the above comment. Please:\n\n" +
+          "1) Click `three dots` -> `edit` to remove the email addresses.\n" +
+          "2) Click `edited` in the comment header, and click on the previous revision of the comment.\n" +
+          "3) When viewing the old revision with an email in it, click `options` -> `delete this revision from history`.";
 
     // make comment
     const data = JSON.stringify({
-      "body": output + empty + stepOne + stepTwo + stepThree
+      "body": notice
     })
       
     const options = {
