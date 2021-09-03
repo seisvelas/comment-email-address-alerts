@@ -1,29 +1,29 @@
 {
-  "name": "actiontestjs",
-  "version": "1.0.0",
+  "name": "comment-email-address-alerts",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "npm install && ncc build index.js --license licenses.txt && git add . && git commit -m 'update' && git push"
+    "dist": "npm install && npx ncc build index.js --license licenses.txt",
+    "deploy": "npm install && npx ncc build index.js --license licenses.txt && git add . && git commit -m 'Update dist' && git push"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seisvelas/actiontestjs.git"
+    "url": "git+https://github.com/FlowCrypt/comment-email-address-alerts.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/seisvelas/actiontestjs/issues"
+    "url": "https://github.com/FlowCrypt/comment-email-address-alerts/issues"
   },
-  "homepage": "https://github.com/seisvelas/actiontestjs#readme",
+  "homepage": "https://github.com/FlowCrypt/comment-email-address-alerts#readme",
   "dependencies": {
-    "@actions/core": "^1.2.7",
-    "@actions/github": "^4.0.0",
-    "babel-preset-env": "^1.7.0"
+    "@actions/core": "^1.5.0",
+    "@actions/github": "^5.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@vercel/ncc": "^0.30.0"
   }
 }
