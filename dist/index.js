@@ -6218,22 +6218,28 @@ try {
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
   const exemptDomainsInput = core.getInput('exemptions')
-  const exemptDomains = exemptDomainsInput.split(',');
+  const exemptDomains = exemptDomainsInput.split(',').map(d => d.toLowerCase()).map(d => '@' + d);
+  const ignoredEmailsInput = core.getInput('ignoredEmails');
+  const ignoredEmails = ignoredEmailsInput.split(',').map(e => e.toLowerCase());
   console.log(`Exempt domains: ${exemptDomains}`);
-  let emails = comment ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi) : null;
-  if (exemptDomainsInput && emails) {
-      emails = emails.filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
+  console.log(`Ignored emails: ${ignoredEmails}`);
+
+  let emails = (comment
+    ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+    : []
+    ).map(e => e.toLowerCase());
+
+  if (exemptDomains && exemptDomains.length && emails.length) {
+      emails = emails.filter(addr => !exemptDomains.some(d => addr.endsWith(d)));
+  }
+
+  if (ignoredEmails && ignoredEmails.length && emails.length) {
+    emails = emails.filter(addr => !ignoredEmails.some(e => addr === e));
   }
 
   console.log(`emails: ${emails}`)
 
-  if (emails) {
-    if (emails.length === 0) {
-      emails = null;
-    }
-  }
-
-  if (emails) {
+  if (emails.length) {
     const repoToken = core.getInput('repo-token');
 
     const notice = "There were " + emails.length + " email addresses found in the above comment. Please:\n\n" +
@@ -6245,7 +6251,7 @@ try {
     const data = JSON.stringify({
       "body": notice
     })
-      
+
     const options = {
         hostname: 'api.github.com',
         port: 443,
@@ -6260,16 +6266,16 @@ try {
 
     const req = https.request(options, res => {
         console.log(`statusCode: ${res.statusCode}`)
-    
+
         res.on('data', d => {
             process.stdout.write(d)
         })
     })
-  
+
     req.on('error', error => {
         console.error(error)
     })
-  
+
     req.write(data)
     req.end()
 
