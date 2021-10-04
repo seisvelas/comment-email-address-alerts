@@ -19,26 +19,24 @@ try {
   const ignoredEmailsInput = core.getInput('ignoredEmails');
   const ignoredEmails = ignoredEmailsInput.split(',').map(e => e.toLowerCase());
   console.log(`Exempt domains: ${exemptDomains}`);
-  let emails = comment
+  console.log(`Ignored emails: ${ignoredEmails}`);
+
+  let emails = (comment
     ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-    : null;
-  if (exemptDomains && exemptDomains.length && emails) {
-      emails = emails.filter(addr => !exemptDomains.some(
-        domain => addr.toLowerCase().endsWith(domain)));
+    : []
+    ).map(e => e.toLowerCase());
+
+  if (exemptDomains && exemptDomains.length && emails.length) {
+      emails = emails.filter(addr => !exemptDomains.some(d => addr.endsWith(d)));
   }
-  if (ignoredEmails && ignoredEmails.length && emails) {
-    emails = emails.filter(addr => !ignoredEmails.some(e => addr.toLowerCase() === e));
+
+  if (ignoredEmails && ignoredEmails.length && emails.length) {
+    emails = emails.filter(addr => !ignoredEmails.some(e => addr === e));
   }
 
   console.log(`emails: ${emails}`)
 
-  if (emails) {
-    if (emails.length === 0) {
-      emails = null;
-    }
-  }
-
-  if (emails) {
+  if (emails.length) {
     const repoToken = core.getInput('repo-token');
 
     const notice = "There were " + emails.length + " email addresses found in the above comment. Please:\n\n" +
