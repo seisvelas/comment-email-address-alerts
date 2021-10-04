@@ -15,11 +15,19 @@ try {
   const comment = payload.comment ? payload.comment.body : payload.issue.body;
   console.log(`comment: ${comment}`)
   const exemptDomainsInput = core.getInput('exemptions')
-  const exemptDomains = exemptDomainsInput.split(',');
+  const exemptDomains = exemptDomainsInput.split(',').map(d => d.toLowerCase()).map(d => '@' + d);
+  const ignoredEmailsInput = core.getInput('ignoredEmails');
+  const ignoredEmails = ignoredEmailsInput.split(',').map(e => e.toLowerCase());
   console.log(`Exempt domains: ${exemptDomains}`);
-  let emails = comment ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi) : null;
-  if (exemptDomainsInput && emails) {
-      emails = emails.filter(addr => !exemptDomains.some(domain => addr.endsWith(domain)))
+  let emails = comment
+    ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+    : null;
+  if (exemptDomains && exemptDomains.length && emails) {
+      emails = emails.filter(addr => !exemptDomains.some(
+        domain => addr.toLowerCase().endsWith(domain)));
+  }
+  if (ignoredEmails && ignoredEmails.length && emails) {
+    emails = emails.filter(addr => !ignoredEmails.some(e => addr.toLowerCase() === e));
   }
 
   console.log(`emails: ${emails}`)
@@ -42,7 +50,7 @@ try {
     const data = JSON.stringify({
       "body": notice
     })
-      
+
     const options = {
         hostname: 'api.github.com',
         port: 443,
@@ -57,16 +65,16 @@ try {
 
     const req = https.request(options, res => {
         console.log(`statusCode: ${res.statusCode}`)
-    
+
         res.on('data', d => {
             process.stdout.write(d)
         })
     })
-  
+
     req.on('error', error => {
         console.error(error)
     })
-  
+
     req.write(data)
     req.end()
 
