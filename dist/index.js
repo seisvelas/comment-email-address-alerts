@@ -6224,10 +6224,11 @@ try {
   console.log(`Exempt domains: ${exemptDomains}`);
   console.log(`Ignored emails: ${ignoredEmails}`);
 
-  let emails = (comment
+  let emails = comment
     ? comment.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-    : []
-    ).map(e => e.toLowerCase());
+    : null;
+  if (emails === null) emails = [];
+  emails = emails.map(e => e.toLowerCase());
 
   if (exemptDomains && exemptDomains.length && emails.length) {
       emails = emails.filter(addr => !exemptDomains.some(d => addr.endsWith(d)));
