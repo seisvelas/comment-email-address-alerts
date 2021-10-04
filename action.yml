@@ -7,6 +7,9 @@ inputs:
   exemptions:
     description: 'domains exempt from scanning'
     required: false
+  ignoredEmails:
+    description: 'individial emails exempt from scanning'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
